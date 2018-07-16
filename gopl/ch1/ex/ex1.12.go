@@ -29,6 +29,7 @@ func main() {
 		cyclesStr := r.FormValue("cycles")
 		if cyclesStr != "" {
 			var err error
+			// declaration here will hide the outer block 'cycles'
 			cycles, err = strconv.Atoi(cyclesStr)
 			if err != nil {
 				fmt.Fprintf(w, "bad cycles param: %s", cyclesStr, err)
