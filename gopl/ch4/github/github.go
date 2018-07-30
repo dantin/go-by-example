@@ -79,6 +79,21 @@ func get(url string) (*http.Response, error) {
 	return resp, nil
 }
 
+func GetIssues(owner, repo string) ([]Issue, error) {
+	url := strings.Join([]string{APIURL, "repos", owner, repo, "issues"}, "/")
+	resp, err := get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var issues []Issue
+	if err := json.NewDecoder(resp.Body).Decode(&issues); err != nil {
+		return nil, err
+	}
+	return issues, nil
+}
+
 func GetIssue(owner, repo, number string) (*Issue, error) {
 	url := strings.Join([]string{APIURL, "repos", owner, repo, "issues", number}, "/")
 	resp, err := get(url)
