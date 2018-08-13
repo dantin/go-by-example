@@ -101,3 +101,15 @@ func TestSymmetricDifference(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestElems(t *testing.T) {
+	elems := []int{0, 4, 8, 9}
+	s := &IntSet{}
+	s.AddAll(elems...)
+	for i, n := range s.Elems() {
+		if elems[i] != n {
+			t.Log(s.Elems())
+			t.Fail()
+		}
+	}
+}

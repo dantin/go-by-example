@@ -137,3 +137,16 @@ func (s *IntSet) Copy() *IntSet {
 	copy(new_one.words, s.words)
 	return new_one
 }
+
+// Elems returns elements of int slice.
+func (s *IntSet) Elems() []int {
+	e := make([]int, 0)
+	for i, word := range s.words {
+		for j := 0; j < 64; j++ {
+			if word&(1<<uint(j)) != 0 {
+				e = append(e, i*64+j)
+			}
+		}
+	}
+	return e
+}
