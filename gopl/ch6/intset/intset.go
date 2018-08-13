@@ -45,6 +45,39 @@ func (s *IntSet) UnionWith(t *IntSet) {
 	}
 }
 
+// IntersectWith sets s to the intersection of s and t.
+func (s *IntSet) IntersectWith(t *IntSet) {
+	for i, tword := range t.words {
+		if i < len(s.words) {
+			s.words[i] &= tword
+		} else {
+			s.words = append(s.words, tword)
+		}
+	}
+}
+
+// DifferenceWith set s to the difference of s and t.
+func (s *IntSet) DifferenceWith(t *IntSet) {
+	for i, tword := range t.words {
+		if i < len(s.words) {
+			s.words[i] &^= tword
+		} else {
+			s.words = append(s.words, tword)
+		}
+	}
+}
+
+// SymmetricDifference set s to the symmetric difference of s and t.
+func (s *IntSet) SymmetricDifference(t *IntSet) {
+	for i, tword := range t.words {
+		if i < len(s.words) {
+			s.words[i] ^= tword
+		} else {
+			s.words = append(s.words, tword)
+		}
+	}
+}
+
 // String returns the set as a string of the form "{1 2 3}".
 func (s *IntSet) String() string {
 	var buf bytes.Buffer
