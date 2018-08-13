@@ -52,3 +52,12 @@ func TestCopy(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestAddAll(t *testing.T) {
+	s := &IntSet{}
+	s.AddAll(0, 2, 4)
+	if !s.Has(0) || !s.Has(2) || !s.Has(4) {
+		t.Log(s)
+		t.Fail()
+	}
+}
