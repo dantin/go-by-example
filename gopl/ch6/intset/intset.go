@@ -6,21 +6,23 @@ import (
 	"fmt"
 )
 
+const wordSize = 32 << (^uint(0) >> 63)
+
 // An IntSet is a set of small non-negative integers.
 // Its zero value represents the empty set.
 type IntSet struct {
-	words []uint64
+	words []uint
 }
 
 // Has reports whether the set contains the non-negative value x.
 func (s *IntSet) Has(x int) bool {
-	word, bit := x/64, uint(x%64)
+	word, bit := x/wordSize, uint(x%wordSize)
 	return word < len(s.words) && s.words[word]&(1<<bit) != 0
 }
 
 // Add adds the non-negative value x to the set.
 func (s *IntSet) Add(x int) {
-	word, bit := x/64, uint(x%64)
+	word, bit := x/wordSize, uint(x%wordSize)
 	for word >= len(s.words) {
 		s.words = append(s.words, 0)
 	}
@@ -86,12 +88,12 @@ func (s *IntSet) String() string {
 		if word == 0 {
 			continue
 		}
-		for j := 0; j < 64; j++ {
+		for j := 0; j < wordSize; j++ {
 			if word&(1<<uint(j)) != 0 {
 				if buf.Len() > len("{") {
 					buf.WriteByte(' ')
 				}
-				fmt.Fprintf(&buf, "%d", 64*i+j)
+				fmt.Fprintf(&buf, "%d", wordSize*i+j)
 			}
 		}
 	}
@@ -99,7 +101,7 @@ func (s *IntSet) String() string {
 	return buf.String()
 }
 
-func popcount(x uint64) int {
+func popcount(x uint) int {
 	count := 0
 	for x != 0 {
 		count++
@@ -119,7 +121,7 @@ func (s *IntSet) Len() int {
 
 // Remove removes x from the set.
 func (s *IntSet) Remove(x int) {
-	word, bit := x/64, uint(x%64)
+	word, bit := x/wordSize, uint(x%wordSize)
 	s.words[word] &^= 1 << bit
 }
 
@@ -133,7 +135,7 @@ func (s *IntSet) Clear() {
 // Copy returns a copy of the set.
 func (s *IntSet) Copy() *IntSet {
 	new_one := &IntSet{}
-	new_one.words = make([]uint64, len(s.words))
+	new_one.words = make([]uint, len(s.words))
 	copy(new_one.words, s.words)
 	return new_one
 }
@@ -142,9 +144,9 @@ func (s *IntSet) Copy() *IntSet {
 func (s *IntSet) Elems() []int {
 	e := make([]int, 0)
 	for i, word := range s.words {
-		for j := 0; j < 64; j++ {
+		for j := 0; j < wordSize; j++ {
 			if word&(1<<uint(j)) != 0 {
-				e = append(e, i*64+j)
+				e = append(e, i*wordSize+j)
 			}
 		}
 	}
