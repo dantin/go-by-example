@@ -6,9 +6,9 @@ import "fmt"
 type ByteCounter int
 
 func (c *ByteCounter) Write(p []byte) (int, error) {
-	length := len(p)
-	*c += ByteCounter(length) // convert int to ByteCounter
-	return length, nil
+	n := len(p)
+	*c += ByteCounter(n) // convert int to ByteCounter
+	return n, nil
 }
 
 func main() {
