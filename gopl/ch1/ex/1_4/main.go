@@ -29,9 +29,8 @@ func hasDuplicatedLines(f *os.File) bool {
 		line := input.Text()
 		if _, ok := counts[line]; ok {
 			return true
-		} else {
-			counts[line]++
 		}
+		counts[line]++
 	}
 	// NOTE: ignoring potential errors from input.Err()
 	return false
