@@ -5,19 +5,19 @@ run: helloworld echo1 echo2 echo3 ex
 
 .PHONY: helloworld
 helloworld:
-	go run helloworld.go
+	go run helloworld/main.go
 
 .PHONY: echo1
 echo1:
-	go run echo1.go 1 a
+	go run echo1/main.go 1 a
 
 .PHONY: echo2
 echo2:
-	go run echo2.go 2 b
+	go run echo2/main.go 2 b
 
 .PHONY: echo3
 echo3:
-	go run echo3.go 3 c
+	go run echo3/main.go 3 c
 
 ex: ex1_1 ex1_2
 
