@@ -1,18 +1,13 @@
 // version 1.0 2018-07-16
 
-// Package tempconv performs Celsius and Fahrenheit conversions.
+// Package tempconv performs Celsius and Fahrenheit temperature computations.
 package tempconv
-
-import "fmt"
 
 // Celsius declaration defines a new named type that has the same underlying type as a float64.
 type Celsius float64
 
 // Fahrenheit declaration defines a new named type that has the same underlying type as a float64.
 type Fahrenheit float64
-
-// Kelvin declaration defines a new named type that has the same underlying type as a float64.
-type Kelvin float64
 
 const (
 	// AbsoluteZeroC is the absolute zero temperature in celsius.
@@ -23,14 +18,12 @@ const (
 	BoilingC Celsius = 100
 )
 
-func (c Celsius) String() string {
-	return fmt.Sprintf("%g°C", c)
+// CToF convert Celsius to Fahrenheit.
+func CToF(c Celsius) Fahrenheit {
+	return Fahrenheit(c*9/5 + 32)
 }
 
-func (f Fahrenheit) String() string {
-	return fmt.Sprintf("%g°F", f)
-}
-
-func (k Kelvin) String() string {
-	return fmt.Sprintf("%gK", k)
+// FToC convert Fahrenheit to Celsius.
+func FToC(f Fahrenheit) Celsius {
+	return Celsius((f - 32) * 5 / 9)
 }

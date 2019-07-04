@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// `n` and `sep` are pointers.
 var n = flag.Bool("n", false, "omit trailing newline")
 var sep = flag.String("s", " ", "separator")
 
