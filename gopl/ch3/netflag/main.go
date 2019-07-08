@@ -4,16 +4,23 @@ package main
 
 import "fmt"
 
+// Flags represents network device status.
 type Flags uint
 
 const (
-	FlagUp           Flags = 1 << iota // is up
-	FlagBroadcast                      // supports broadcast access capability
-	FlagLoopback                       // is a loopback interface
-	FlagPointToPoint                   // belongs to a point-to-point link
-	FlagMulticast                      // supports multicast access capability
+	// FlagUp is up
+	FlagUp Flags = 1 << iota
+	// FlagBroadcast supports broadcast access capability
+	FlagBroadcast
+	// FlagLoopback is a loopback interface
+	FlagLoopback
+	// FlagPointToPoint belongs to a point-to-point link
+	FlagPointToPoint
+	// FlagMulticast supports multicast access capability
+	FlagMulticast
 )
 
+// IsUp
 func IsUp(v Flags) bool {
 	return v&FlagUp == FlagUp
 }
