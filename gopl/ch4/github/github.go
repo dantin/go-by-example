@@ -16,16 +16,21 @@ import (
 )
 
 const (
+	// IssueURL is the api url of github for issue.
 	IssueURL = "https://api.github.com/search/issues"
-	APIURL   = "https://api.github.com"
+	// APIURL is the base url of github api.
+	APIURL = "https://api.github.com"
 )
 
+// IssueSearchResult is the wrapper of Issue.
 type IssueSearchResult struct {
 	TotalCount int `json:"total_count"`
 	Items      []*Issue
 }
 
+// Issue is the issue item.
 type Issue struct {
+	// Unmarshaling in go is case-insensitive.
 	Number    int
 	HTMLURL   string `json:"html_url"`
 	Title     string
@@ -35,10 +40,12 @@ type Issue struct {
 	Body      string    // in Markdown format
 }
 
+// CacheURL returns issue url.
 func (i Issue) CacheURL() string {
 	return fmt.Sprintf("/issues/%d", i.Number)
 }
 
+// User is the user item.
 type User struct {
 	Login   string
 	HTMLURL string `json:"html_url"`
@@ -59,6 +66,7 @@ func SearchIssues(terms []string) (*IssueSearchResult, error) {
 	}
 
 	var result IssueSearchResult
+	// streaming decoder.
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		resp.Body.Close()
 		return nil, err
@@ -79,6 +87,7 @@ func get(url string) (*http.Response, error) {
 	return resp, nil
 }
 
+// GetIssues queries the GitHub issues list by owner.
 func GetIssues(owner, repo string) ([]Issue, error) {
 	url := strings.Join([]string{APIURL, "repos", owner, repo, "issues"}, "/")
 	resp, err := get(url)
@@ -94,6 +103,7 @@ func GetIssues(owner, repo string) ([]Issue, error) {
 	return issues, nil
 }
 
+// GetIssue queries the GitHub issue detail.
 func GetIssue(owner, repo, number string) (*Issue, error) {
 	url := strings.Join([]string{APIURL, "repos", owner, repo, "issues", number}, "/")
 	resp, err := get(url)
@@ -109,6 +119,7 @@ func GetIssue(owner, repo, number string) (*Issue, error) {
 	return &issue, nil
 }
 
+// EditIssue edit issue.
 func EditIssue(owner, repo, number string, fields map[string]string) (*Issue, error) {
 	buf := &bytes.Buffer{}
 	encoder := json.NewEncoder(buf)

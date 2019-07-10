@@ -8,10 +8,11 @@ import (
 	"log"
 )
 
+// Movie is a struct type that shows JSON marshal and unmarshal.
 type Movie struct {
 	Title  string
 	Year   int  `json:"released"`
-	Color  bool `json:"color, omitempty"`
+	Color  bool `json:"color,omitempty"`
 	Actors []string
 }
 

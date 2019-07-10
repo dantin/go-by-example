@@ -23,6 +23,7 @@ func daysAgo(t time.Time) int {
 	return int(time.Since(t).Hours() / 24)
 }
 
+// Must is a helper function.
 var report = template.Must(template.New("issuelist").
 	Funcs(template.FuncMap{"daysAgo": daysAgo}).
 	Parse(templ))
