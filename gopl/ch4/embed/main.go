@@ -4,15 +4,18 @@ package main
 
 import "fmt"
 
+// Point is the type of point in 2D.
 type Point struct {
 	X, Y int
 }
 
+// Circle embeds a Point.
 type Circle struct {
 	Point
 	Radius int
 }
 
+// Wheel embeds a Circle
 type Wheel struct {
 	Circle
 	Spokes int

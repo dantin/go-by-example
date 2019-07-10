@@ -19,6 +19,13 @@ func shfl(s []int, n int) {
 	reverse(s)
 }
 
+// shfr rotate a slice right by n positions.
+func shfr(s []int, n int) {
+	reverse(s)
+	reverse(s[:n])
+	reverse(s[n:])
+}
+
 // equal compare whether two string slices are equal.
 // NOTE: There is no language support to compare whether two
 //       slice are equal.
@@ -36,11 +43,13 @@ func equal(x, y []string) bool {
 
 func main() {
 	a := [...]int{0, 1, 2, 3, 4, 5}
-	fmt.Println(a)
+	fmt.Println("orig:", a)
 	// convert array to slice.
 	s := a[:]
 	shfl(s, 2)
-	fmt.Println(a)
+	fmt.Println("shift left by 2: ", a)
+	shfr(s, 2)
+	fmt.Println("shift right by 2:", a)
 	reverse(a[:])
-	fmt.Println(a)
+	fmt.Println("reversed", a)
 }

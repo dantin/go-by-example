@@ -1,6 +1,8 @@
 // version 1.0 2018-07-25
 package main
 
+import "fmt"
+
 var graph = make(map[string]map[string]bool)
 
 func addEdge(from, to string) {
@@ -14,4 +16,9 @@ func addEdge(from, to string) {
 
 func hasEdge(from, to string) bool {
 	return graph[from][to]
+}
+
+func main() {
+	// nonexistence element is the default value.
+	fmt.Println(graph["a"]["b"])
 }
