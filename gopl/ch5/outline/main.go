@@ -11,6 +11,9 @@ import (
 
 func outline(stack []string, n *html.Node) {
 	if n.Type == html.ElementNode {
+		// here pushes an element on stack, there is no corresponding pop.
+		// callee may append elements to this slice, but it doesn't modify
+		// the initial elements the are visible to the caller.
 		stack = append(stack, n.Data) // push tag
 		fmt.Println(stack)
 	}

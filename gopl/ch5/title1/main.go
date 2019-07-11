@@ -1,4 +1,4 @@
-// version 1.0 2018-08-09
+// version 1.0 2018-08-08
 
 package main
 
@@ -12,56 +12,32 @@ import (
 	"golang.org/x/net/html"
 )
 
-// soleTitle returns the text of the first non-empty title element in doc, and an error
-// if there was no exactly none.
-func soleTitle(doc *html.Node) (title string, err error) {
-	type bailout struct{}
-
-	defer func() {
-		switch p := recover(); p {
-		case nil:
-			// no panic
-		case bailout{}:
-			// "expected" panic
-			err = fmt.Errorf("multiple title elements")
-		default:
-			panic(p)
-		}
-	}()
-
-	forEachNode(doc, func(n *html.Node) {
-		if n.Type == html.ElementNode && n.Data == "title" && n.FirstChild != nil {
-			if title != "" {
-				panic(bailout{})
-			}
-			title = n.FirstChild.Data
-		}
-	}, nil)
-	if title == "" {
-		return "", fmt.Errorf("no title element")
-	}
-	return title, nil
-}
-
+// title function inspects the `Content-Type` header of the server's response and returns
+// an error if the document is not HTML.
 func title(url string) error {
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
 
 	// Check Content-Type is HTML (e.g., "text/html; charset=utf-8").
 	ct := resp.Header.Get("Content-Type")
 	if ct != "text/html" && !strings.HasPrefix(ct, "text/html;") {
+		resp.Body.Close()
 		return fmt.Errorf("%s has type %s, not text/html", url, ct)
 	}
 	doc, err := html.Parse(resp.Body)
+	resp.Body.Close()
 	if err != nil {
 		return fmt.Errorf("parsing %s as HTML: %v", url, err)
 	}
-	t, err := soleTitle(doc)
-	fmt.Println(t)
-	return err
+	visitNode := func(n *html.Node) {
+		if n.Type == html.ElementNode && n.Data == "title" && n.FirstChild != nil {
+			fmt.Println(n.FirstChild.Data)
+		}
+	}
+	forEachNode(doc, visitNode, nil)
+	return nil
 }
 
 func forEachNode(n *html.Node, pre, post func(n *html.Node)) {

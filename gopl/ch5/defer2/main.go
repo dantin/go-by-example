@@ -8,6 +8,7 @@ import (
 	"runtime"
 )
 
+// printStack uses runtime package that let the programmer dump the panic stack.
 func printStack() {
 	var buf [4096]byte
 	n := runtime.Stack(buf[:], false)

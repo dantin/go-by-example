@@ -21,6 +21,9 @@ func fetch(url string) (filename string, n int64, err error) {
 	if local == "/" {
 		local = "index.html"
 	}
+
+	// on many file system, notably NFS, write errors are not reported immediately but
+	// may be postponed until the file is closes.
 	f, err := os.Create(local)
 	if err != nil {
 		return "", 0, err

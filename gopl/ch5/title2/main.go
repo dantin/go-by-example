@@ -12,6 +12,8 @@ import (
 	"golang.org/x/net/html"
 )
 
+// title function inspects the `Content-Type` header of the server's response and returns
+// an error if the document is not HTML.
 func title(url string) error {
 	resp, err := http.Get(url)
 	if err != nil {

@@ -1,9 +1,5 @@
 // version 1.0 2018-07-30
 
-// forEachNode calls the functions pre(x) and post(x) for each node
-// x in the tree rooted at n. Both functions are optional.
-// pre is called before the children are visited (preorder) and
-// post is called after (postorder).
 package main
 
 import (
@@ -15,6 +11,10 @@ import (
 
 var depth int
 
+// forEachNode calls the functions pre(x) and post(x) for each node
+// x in the tree rooted at n. Both functions are optional.
+// pre is called before the children are visited (preorder) and
+// post is called after (postorder).
 func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	if pre != nil {
 		pre(n)
