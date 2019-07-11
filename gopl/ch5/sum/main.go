@@ -4,6 +4,8 @@ package main
 
 import "fmt"
 
+// sum is a variadic function, the type of the final parameter is preceded
+// by an ellipsis, "...".
 func sum(vals ...int) int {
 	total := 0
 	for _, val := range vals {

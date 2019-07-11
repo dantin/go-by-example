@@ -35,6 +35,8 @@ func Extract(url string) ([]string, error) {
 				if a.Key != "href" {
 					continue
 				}
+				// parse raw href attribute that handle a URL relative
+				// to the base URL of the document.
 				link, err := resp.Request.URL.Parse(a.Val)
 				if err != nil {
 					continue // ignore bad URLs
@@ -47,6 +49,7 @@ func Extract(url string) ([]string, error) {
 	return links, nil
 }
 
+// forEachNode apply `pre` and `post` to each HTML node.
 func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	if pre != nil {
 		pre(n)

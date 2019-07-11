@@ -1,8 +1,5 @@
 // version 1.0 2018-07-31
 
-// WaitForServer attempts to conact the server of a URL.
-// It tries for one minute using exponential back-off.
-// It reports an error if all attemps fail.
 package main
 
 import (
@@ -12,6 +9,9 @@ import (
 	"time"
 )
 
+// WaitForServer attempts to conact the server of a URL.
+// It tries for one minute using exponential back-off.
+// It reports an error if all attemps fail.
 func WaitForServer(url string) error {
 	const timeout = 1 * time.Minute
 	deadline := time.Now().Add(timeout)
