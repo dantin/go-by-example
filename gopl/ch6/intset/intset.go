@@ -1,3 +1,4 @@
+// Package intset is a implementation  a set of small non-negative integer.
 // version 1.0 2018-08-13
 package intset
 
@@ -6,11 +7,13 @@ import (
 	"fmt"
 )
 
+// wordSize is the word size on machine.
 const wordSize = 32 << (^uint(0) >> 63)
 
 // An IntSet is a set of small non-negative integers.
 // Its zero value represents the empty set.
 type IntSet struct {
+	// To encapsulate an object, we must make it a struct.
 	words []uint
 }
 
@@ -134,10 +137,10 @@ func (s *IntSet) Clear() {
 
 // Copy returns a copy of the set.
 func (s *IntSet) Copy() *IntSet {
-	new_one := &IntSet{}
-	new_one.words = make([]uint, len(s.words))
-	copy(new_one.words, s.words)
-	return new_one
+	newOne := &IntSet{}
+	newOne.words = make([]uint, len(s.words))
+	copy(newOne.words, s.words)
+	return newOne
 }
 
 // Elems returns elements of int slice.

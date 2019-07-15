@@ -6,6 +6,7 @@ import (
 	"sync"
 )
 
+// cache shows that unnamed embedding.
 var cache = struct {
 	sync.Mutex
 	mapping map[string]string
@@ -13,6 +14,7 @@ var cache = struct {
 	mapping: make(map[string]string),
 }
 
+// Lookup finds value from cache using key.
 func Lookup(key string) string {
 	cache.Lock()
 	v := cache.mapping[key]
@@ -20,6 +22,7 @@ func Lookup(key string) string {
 	return v
 }
 
+// Save saves value into cache using key.
 func Save(key, value string) {
 	cache.Lock()
 	cache.mapping[key] = value

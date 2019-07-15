@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	p := geometry.Point{1, 2}
-	q := geometry.Point{4, 6}
+	p := geometry.Point{X: 1, Y: 2}
+	q := geometry.Point{X: 4, Y: 6}
 
 	distance := geometry.Point.Distance // method expression
 	fmt.Println(distance(p, q))
